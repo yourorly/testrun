@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var form = document.getElementById('formreq');
+        var formData = new FormData(form);
+
+        var webhookUrl = 'https://discord.com/api/webhooks/1284024242551390230/PUwIzPONBHILgWGu46hV17yZSurK8dno4izNYHG_9oSuMCzU4BYlK6kaqUZT5D6xYCgd';
+
+        fetch(webhookUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                content: `# INFO\n\nRequest\n\nSent Via: ${formData.get('sent')}\nData: ${formData.get('data')}}`,
+            }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            alert('Message submitted successfully!');
+            form.reset();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error submitting message. Please try again.');
+        });
+    </script>
+</head>
+<body>
+    <form action="" id="formreq" method="post">
+        <input type="text" name="sent" id="sent">
+        <input type="text" name="data" id="data">
+    </form>
+</body>
+</html>
